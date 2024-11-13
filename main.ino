@@ -1,14 +1,14 @@
-#include "motor_control.h"
+#include "button_handling.h"
+
+const int buttonPin = 2;
+int buttonState = LOW;
 
 void setup() {
-pinMode(STEP_PIN, OUTPUT);
-pinMode(DIR_PIN, OUTPUT);
+    pinMode(buttonPin, INPUT);
 }
 
 void loop() {
-motor_movement(CLOCKWISE);
-delay(500);
-
-motor_movement(ANTICLOCKWISE);
-delay(500);
+    if (debounceButton(buttonPin, buttonState)) {
+        Serial.println("Button Pressed!");
+    }
 }
