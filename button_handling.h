@@ -3,8 +3,7 @@
 
 #include <Arduino.h>
 
-bool isButtonPressed();
-bool isButtonHeld();
+bool isButtonPressed(const int buttonPin);
+bool isButtonHeld(const int buttonPin);
 
 #endif
-

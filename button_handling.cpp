@@ -1,6 +1,6 @@
 #include "button_handling.h"
 
-const int buttonPin = 2;          // Pin for the button
+          // Pin for the button
 const unsigned long debounceDelay = 50;  // 50 milliseconds debounce time
 const unsigned long holdThreshold = 1000; // 1000 milliseconds (1 second) hold time
 
@@ -10,7 +10,7 @@ unsigned long lastDebounceTime = 0;
 unsigned long buttonPressStartTime = 0;  // Time when button press started
 
 
-bool isButtonPressed() {
+bool isButtonPressed(const int buttonPin) {
     bool currentButtonState = digitalRead(buttonPin) == LOW;  // Button is pressed if the pin is LOW
 
     if (currentButtonState != lastButtonState) {
@@ -32,10 +32,9 @@ bool isButtonPressed() {
     return false;  // Return false if the button is not pressed
 }
 
-bool isButtonHeld() {
+bool isButtonHeld(const int buttonPin) {
     if (buttonState == true && (millis() - buttonPressStartTime >= holdThreshold)) {
         return true;  // Return true if button is held for more than 1 second
     }
     return false;  // Return false if button is not held long enough
 }
-
