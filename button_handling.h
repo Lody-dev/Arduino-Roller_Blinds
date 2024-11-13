@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 
-bool debounceButton(int buttonPin, int &buttonState);
+bool isButtonPressed();
+bool isButtonHeld();
 
 #endif
 

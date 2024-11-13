@@ -1,30 +1,41 @@
 #include "button_handling.h"
 
-const unsigned long debounceDelay = 50;
-unsigned long lastDebounceTime = 0;
-int lastButtonState = LOW;
+const int buttonPin = 2;          // Pin for the button
+const unsigned long debounceDelay = 50;  // 50 milliseconds debounce time
+const unsigned long holdThreshold = 1000; // 1000 milliseconds (1 second) hold time
 
-bool debounceButton(int buttonPin, int &buttonState) 
-{
-    int reading = digitalRead(buttonPin);
+bool buttonState = false;  // Current button state (pressed or not)
+bool lastButtonState = false;  // Previous button state
+unsigned long lastDebounceTime = 0;  
+unsigned long buttonPressStartTime = 0;  // Time when button press started
 
-    if (reading != lastButtonState) 
-    {
-        lastDebounceTime = millis();
+
+bool isButtonPressed() {
+    bool currentButtonState = digitalRead(buttonPin) == LOW;  // Button is pressed if the pin is LOW
+
+    if (currentButtonState != lastButtonState) {
+        lastDebounceTime = millis();  // Record the time of state change
     }
 
-    if ((millis() - lastDebounceTime) > debounceDelay) 
-    {
-        if (reading != buttonState) 
-	{
-            buttonState = reading;
-            if (buttonState == HIGH) 
-	    {
-                return true;
+    if ((millis() - lastDebounceTime) > debounceDelay) {
+        if (currentButtonState != buttonState) {
+            buttonState = currentButtonState;
+            if (buttonState == true) {  // Button was pressed
+                buttonPressStartTime = millis();  // Record the time when the button was pressed
+                lastButtonState = buttonState;
+                return true;  // Return true when the button is pressed
             }
         }
     }
-    
-    lastButtonState = reading;
-    return false;
+
+    lastButtonState = currentButtonState;
+    return false;  // Return false if the button is not pressed
 }
+
+bool isButtonHeld() {
+    if (buttonState == true && (millis() - buttonPressStartTime >= holdThreshold)) {
+        return true;  // Return true if button is held for more than 1 second
+    }
+    return false;  // Return false if button is not held long enough
+}
+

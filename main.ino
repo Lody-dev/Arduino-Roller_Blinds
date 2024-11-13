@@ -1,14 +1,20 @@
 #include "button_handling.h"
 
-const int buttonPin = 2;
-int buttonState = LOW;
-
-void setup() {
-    pinMode(buttonPin, INPUT);
+void setup()
+{
+    pinMode(buttonPin, INPUT_PULLUP); 
+    Serial.begin(9600); 
 }
 
-void loop() {
-    if (debounceButton(buttonPin, buttonState)) {
+
+
+void loop() 
+{
+    if (isButtonPressed()) {
         Serial.println("Button Pressed!");
+    }
+
+    if (isButtonHeld()) {
+        Serial.println("Button Held for 1 second!");
     }
 }
