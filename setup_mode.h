@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-#include "motor_movement.h"
-#include "button_handing.h"
+#include "motor_control.h"
+#include <Bounce2.h>
 
 unsigned int setup_mode(const int button_up, const int button_down);
 

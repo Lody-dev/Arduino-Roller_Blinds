@@ -1,24 +1,45 @@
 #include "setup_mode.h"
 
-unsigned int 	window_limit = 20000;
-unsigned int 	step_count = 0;
-
-unsigned int setup_mode(const int button_up, const int button_down){
+unsigned int setup_mode(const int b_up, const int b_down)
+{
+	unsigned int	limit = 2000;
+	unsigned int	count = 100;
 	
-	if(isButtonPressed(button_up) && step_count > 0)
-	{
-		motor_movement(ANTICLOCKWISE);
-		step_count--;
-	}
-	else if(isButtonDownPressed(button_down) && step_count < window_limit)
-	{
-		motor_movement(CLOCKWISE);
-		step_count++;
+	Serial.begin(9600);
 
-	}
-	else if(isButtonPressed(button_up) && isButtonDownPressed(button_down))
+	Bounce button_up = Bounce();
+	Bounce button_down = Bounce();
+  
+	button_up.attach(b_up);
+	button_down.attach(b_down);
+
+	button_up.interval(50);
+	button_down.interval(50);
+	
+	while(true)
 	{
-		window_limit = step_count;
-		return(window_limit);
-	}
+		button_up.update();
+		button_down.update();
+
+		while((button_down.fell()) && (count < limit))
+		{
+			motor_movement(ANTICLOCKWISE);
+			count++;
+			Serial.println(count);
+		}
+		
+		while((button_up.fell()) && (count > 0))
+		{
+			motor_movement(CLOCKWISE);
+			count--;
+			Serial.println(count);
+		}
+
+		if((button_up.fell()) && (button_down.fell()))
+		{
+			return(count);
+			break;
+		}
+	} 
+
 }

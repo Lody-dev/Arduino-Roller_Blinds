@@ -1,22 +1,22 @@
 #include "setup_mode.h"
 
-const int button_up = 2;
-const int button_down = 3;
-unsigned int motor_limit; 
+const int b_up = 2;
+const int b_down = 3;
+unsigned int limit; 
+
 
 void setup()
 {
-	pinMode(button_up, INPUT_PULLUP); 
+	pinMode(STEP_PIN, OUTPUT);
+	pinMode(DIR_PIN, OUTPUT);
+	pinMode(b_up, INPUT_PULLUP);
+	pinMode(b_down, INPUT_PULLUP);
 	Serial.begin(9600);
-	
-
 }
 
-
-
-void loop() 
+void loop()
 {
-	motor_limit = setup_mode(button_up, button_down);
-	Serial.print("New motor limit set: ");
-	Serial.println(motor_limit);
+	limit = setup_mode(b_up, b_down);
+	Serial.print("New limit: ");
+	Serial.println(limit);
 }
