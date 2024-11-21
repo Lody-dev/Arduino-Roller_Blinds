@@ -3,7 +3,7 @@
 unsigned int setup_mode(const int b_up, const int b_down)
 {
 	unsigned int	limit = 2000;
-	unsigned int	count = 100;
+	unsigned int	count = 0;
 	
 	Serial.begin(9600);
 
