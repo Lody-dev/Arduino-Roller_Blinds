@@ -11,10 +11,5 @@ void setup()
 
 void loop() 
 {
-	//motor_limit = setup_mode(button_up, button_down);
-	//Serial.print("New motor limit set: ");
-	//Serial.println(motor_limit);
-  //delay(500);
- 
   operate_mode(setup_mode(button_up, button_down), button_up, button_down);
 }

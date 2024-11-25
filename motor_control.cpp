@@ -1,7 +1,10 @@
 #include "motor_control.h"
 
-int stepsPerRevolution = 200; //200 steps = 360 degree rotation
-
+// Moves the motor one step in the specified direction.
+// The direction is controlled by the `direction` parameter:
+//   - CLOCKWISE (HIGH) rotates the motor clockwise.
+//   - ANTICLOCKWISE (LOW) rotates the motor counterclockwise.
+// Pulses the STEP_PIN to trigger the motor step, with a 500-microsecond delay between pulses.
 void motor_movement(bool direction)
 {
 	digitalWrite(DIR_PIN, direction);
